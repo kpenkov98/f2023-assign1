@@ -1,3 +1,10 @@
+<?php
+include 'php/header.php';
+include 'php/footer.php';
+include 'php/config.php';
+include 'php/database.php';
+include 'php/navigation.php';
+?>
 <html lang="en">
     <head>
         <head>
@@ -27,23 +34,25 @@
           
           </head>
 <body>
-    
-    <form>
+<header>
+    <?php navigation(); music_header(); ?>
+</header>
+    <form action="php/database.php" method="get">
 
         <div class="row">
-          <div class="three columns">
+          <div class="five columns">
             <label for="Song Title">Song Title</label>
             <input class="u-full-width" type="text" placeholder="Ex. Lose Yourself" id="exampleSongTitle">
           </div>
-          <div class="three columns">
-            <label for="typeOfGenre">Genre</label>
-            <select class="u-full-width" id="Genre">
-                <option value="Option 1">Questions</option>
+          <div class="five columns">
+            <label for="typeOfGenre">Artist</label>
+            <select class="u-full-width" id="Artist">
+                <option value="Option 1"><!-- insert PHP here --></option>
 
             </select>
           </div>
         </div>
-        <div class="three columns">
+        <div class="five columns">
           <label for="typeOfGenre">Genre</label>
           <select class="u-full-width" id="Genre">
               <option value="Option 1">Questions</option>
@@ -51,17 +60,16 @@
         </div>
         
         </div>
-        <label for="exampleMessage">Message</label>
-        <textarea class="u-full-width" placeholder="Hi Dave …" id="exampleMessage"></textarea>
-        <label class="example-send-yourself-copy">
-          <input type="checkbox">
-          <span class="label-body">Send a copy to yourself</span>
-        </label>
+        <div class="five columns">
+        <label for="exampleMessage">Year</label>
+        <textarea class="u-full-width" placeholder="2017" id="Year"></textarea>
         <input class="button-primary" type="submit" value="Submit">
-      
+      </div>
     </form>
     
-
+<footer>
+  <?php footer(); ?>
+</footer>
       
 </body>
 </html>

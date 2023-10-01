@@ -1,15 +1,17 @@
+<?php
+include 'php/header.php';
+include 'php/footer.php';
+include 'php/config.php';
+include 'php/database.php';
+include 'php/navigation.php';
+?>
 <!-- The style used in this website is from http://getskeleton.com/ -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <head>
-
         <!-- Basic Page Needs
         –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <meta charset="utf-8">
-        <title>Your page title here :)</title>
+        <title>Home Page</title>
         <meta name="description" content="">
         <meta name="author" content="">
       
@@ -34,14 +36,14 @@
 </head>
 <body>     
 <header>
-    <?php include '/php/header.php'; ?>
-    <?php include '/php.navigation.php'; ?>
+    <?php music_header(); 
+    navigation(); ?>
 </header>
-    <section>
+    <!--<section>
         <h2>Home Page</h2>
         <h3>Kirill Penkov COMP3512 <a href="https://github.com/kpenkov98/f2023-assign1.git" target="_blank">Github</a></h3>
         <p>This purpose of this assignment is to create a multi-page PHP website with database integration. Allowing users to browse, seach and favorite their music.</p>        
-    </section>
+    </section> -->
     <section>
         <h2>Song Information</h2>
         <li>Top Genres</li>
@@ -56,8 +58,7 @@
 
 
     <footer>
-    <?php include'/php/footer.php'; ?>
-
-</footer>
+        <?php footer(); ?>
+    </footer>
 </body>
 </html>
