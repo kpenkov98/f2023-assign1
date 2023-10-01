@@ -1,8 +1,46 @@
 <?php
 require_once 'config.php';
 
+function getDB($connString, $user, $pass) {
+
+    try{
+
+        $pdo = new PDO($connString, $user, $pass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+
+    }catch(PDOException $e){
+        die($e -> getMessage());
+    }
+}
+
+$db = getDB($connString, $user, $pass);
+
 //joins the tables and creates a usable array
-function sorted_music_list() {}
+function sorted_music_list($db) {
+
+    try{
+        $sql = "SELECT songs.title, artists.artist_name, songs.year
+                FROM songs
+                INNER JOIN artists ON songs.artist_id = artists.artist_id
+                ORDER BY songs.popularity DESC";      
+                
+    $result = $db->query($sql);
+
+    $music_table = $result->fetchAll(PDO::FETCH_ASSOC);
+
+    return $music_table;
+
+    } catch (PDOException $e) {
+
+        die($e->getMessage());
+    }
+
+    
+
+}
+
+
 
 //search song with query passing
 function search_song() {}
@@ -40,5 +78,5 @@ function running_song() {}
 //studying (bmp 100-115 AND speechiness 1-20) (acousticness * 0.8 + speechiness 100 + valence 100, sorted by desc)
 function studying_song() {}
 
-
+$pdo = null;
 ?>

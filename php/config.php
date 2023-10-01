@@ -1,8 +1,14 @@
+
 <?php
-define('DBHOST', 'localhost');
-define('DBNAME', 'music');
-define('DBUSER', 'root');
-define('DBPASS', '');
-define('DBCONNSTRING',"mysql:host=" . DBHOST . ";dbname=" . DBNAME .
-";charset=utf8mb4;");
+//used from COMP3512 Lecure Notes (with edits)
+$host = "localhost";
+$database = "music";
+$user = "root";
+$pass = "";
+
+// modify these variables for your installation
+$connection = mysqli_connect($host, $user, $pass, $database);
+
+$connString = "mysql:host=localhost;dbname=music";
+
 ?>
