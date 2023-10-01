@@ -4,13 +4,11 @@ include 'php/footer.php';
 include 'php/config.php';
 include 'php/database.php';
 include 'php/navigation.php';
+include 'php/htmlhead.php';
 ?>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song Information</title>
-    <link rel="stylesheet" href="style.css">
+    <?php htmlhead(); ?>
 </head>
 <body>
 <header>

@@ -4,18 +4,17 @@ include 'php/footer.php';
 include 'php/config.php';
 include 'php/database.php';
 include 'php/navigation.php';
+include 'php/htmlhead.php';
 ?>
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<?php htmlhead(); ?>
 </head>
 <body>
 <header>
-    <?php navigation();
-    music_header(); ?>
+    <?php music_header(); 
+    navigation(); ?>
 </header>
 <footer>
   <?php footer(); ?>

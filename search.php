@@ -4,38 +4,18 @@ include 'php/footer.php';
 include 'php/config.php';
 include 'php/database.php';
 include 'php/navigation.php';
+include 'php/htmlhead.php';
 ?>
 <html lang="en">
     <head>
         <head>
-            <!-- Basic Page Needs
-            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <meta charset="utf-8">
-            <title>Song Search</title>
-            <meta name="description" content="">
-            <meta name="author" content="">
-          
-            <!-- Mobile Specific Metas
-            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-          
-            <!-- FONT
-            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-          
-            <!-- CSS
-            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <link rel="stylesheet" href="css/normalize.css">
-            <link rel="stylesheet" href="css/skeleton.css">
-          
-            <!-- Favicon
-            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <link rel="icon" type="image/png" href="images/favicon.png">
+        <?php htmlhead(); ?>
           
           </head>
 <body>
 <header>
-    <?php navigation(); music_header(); ?>
+    <?php music_header(); 
+    navigation();  ?>
 </header>
     <form action="php/database.php" method="get">
 
