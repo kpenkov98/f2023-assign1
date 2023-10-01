@@ -1,5 +1,6 @@
 <?php
 
-    echo <title>COMP3512</title>;
-    echo <h1>Kirill Penkov</h1>;
+    echo "<h1>COMP3512</h1>";
+    echo "<h2>Kirill Penkov</h2>";
+
 ?>
