@@ -74,13 +74,12 @@ function search_song($db)
     //artist prepopulation into options 
     echo "<label for='artist'>Artist</label>";
     echo "<select id='artist' name='artist'>";
-    echo    "<option value=''>Select an artist</option>";
+    echo    "<option value=''>Select an Artist</option>";
     foreach ($artistOption as $artist_id => $artist_name) {
-        echo  "<option value='$artist_id'></option>";
         if (isset($artist_name) && $artist_name == $artist_id) {
             echo " selected";
         }
-        echo ">$artist_name</option>";
+        echo "<option>$artist_name</option>";
     }
 
     //year
@@ -93,11 +92,10 @@ function search_song($db)
 
     echo "<option value=''>Select a genre</option>";
     foreach ($genreOption as $genre_id => $genre_name) {
-        echo  "<option value='$genre_id'></option>";
         if (isset($genre_name) && $genre_name == $genre_id) {
-            echo " selected";
+            echo " selected";   
         }
-        echo ">$genre_name</option>";
+        echo "<option>$genre_name</option>";
     }
     echo "<input type='submit' value='Search'/>";
     echo "</form>";
@@ -188,3 +186,4 @@ function studying_song()
 }
 
 $pdo = null;
+?>

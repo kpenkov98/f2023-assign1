@@ -38,18 +38,28 @@ include 'php/htmlhead.php';
 
       if (strlen($title) >= $min_length || strlen($year) >= $min_length) { // if query length is more or equal minimum length then
 
-        $title = htmlspecialchars($title);
-        $artist = htmlspecialchars($artist);
+        $title = strtolower(htmlspecialchars($title));
+        $artist = strtolower(htmlspecialchars($artist));
         $year = htmlspecialchars($year);
-        $genre = htmlspecialchars($genre);
+        $genre = strtolower(htmlspecialchars($genre));
+
         //changes characters used in html to their equivalents, for example: < to &gt;
+
+        echo $year;
 
         $searchQuery =
           "SELECT songs.song_id, songs.title, artists.artist_name, songs.year, genres.genre_name  
         FROM songs 
         INNER JOIN artists ON songs.artist_id = artists.artist_id
         INNER JOIN genres ON songs.genre_id = genres.genre_id
-        WHERE songs.title LIKE '%$title%' OR artists.artist_name LIKE '%$artist%' OR genres.genre_name LIKE '%$genre%' OR songs.year = '$year' 
+        WHERE 
+        LOWER(songs.title) LIKE '%$title%' 
+        OR 
+        LOWER(artists.artist_name) = '$artist' 
+        OR 
+        LOWER(genres.genre_name) = '$genre' 
+        OR 
+        songs.year = '$year' 
         ORDER BY songs.popularity DESC";
 
         $searchResult = $db->prepare($searchQuery);
@@ -82,7 +92,6 @@ include 'php/htmlhead.php';
           echo "</tr>";
         }
         echo "</table>";
-        //}
       } else { // if there is no matching rows do following
         echo "<h5 align ='center'>No Results</h5>";
       }
