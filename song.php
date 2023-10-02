@@ -15,7 +15,9 @@ include 'php/htmlhead.php';
     <?php music_header(); 
     navigation();  ?>
 </header>
-
+<h3 align="center"> 
+<?php single_song($db);?>
+</h3> 
 <footer>
   <?php footer(); ?>
 </footer>

@@ -7,28 +7,28 @@ include 'php/navigation.php';
 include 'php/htmlhead.php';
 ?>
 <html lang="en">
-    <head>
-        <head>
-        <?php htmlhead(); ?>
-          
-          </head>
+
+<head>
+
+  <head>
+    <?php htmlhead(); ?>
+
+  </head>
+
 <body>
-<header>
-    <?php music_header(); 
+  <header>
+    <?php music_header();
     navigation();  ?>
-</header>
+  </header>
 
-<!--source for search info https://owlcation.com/stem/Simple-search-PHP-MySQL-->
-<?php     
+  <!--source for search info https://owlcation.com/stem/Simple-search-PHP-MySQL-->
+  <?php
+  search_song($db);
+  ?>
+  <footer>
+    <?php footer(); ?>
+  </footer>
 
-search_song(); 
-?>
-
-
-
-<footer>
-  <?php footer(); ?>
-</footer>
-      
 </body>
+
 </html>
