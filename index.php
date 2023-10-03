@@ -37,6 +37,9 @@ include 'php/htmlhead.php';
         <?php most_pop_songs($db); ?>
         </table>
         <li>One-Hit Wonders</li>
+        <table>
+        <?php one_hit_wonders($db); ?>
+        </table>
         <li>Longest Acoustic Songs</li>
         <li>At The Club</li>
         <li>Running Songs</li>

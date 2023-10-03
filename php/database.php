@@ -220,9 +220,30 @@ function most_pop_songs($db)
 
 
 //artists with one song sorted by popularity
-function one_hit_wonders()
+function one_hit_wonders($db)
 {
+    $onehitQuery = 
+    "SELECT songs.title, artists.artist_name
+    FROM songs
+    INNER JOIN artists ON songs.artist_id = artists.artist_id
+    GROUP BY artists.artist_id
+    HAVING COUNT(songs.song_id) = 1
+    ORDER BY songs.popularity DESC
+    LIMIT 10";
+
+    $onehitResult = $db->query($onehitQuery);
+
+    $onehit = $onehitResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($onehit as $song_name) {
+        echo "<tr>";
+        echo "<td>";
+        echo $song_name['title'] . " by " . $song_name['artist_name'];
+        echo "</td>";
+        echo "</tr>";
+    }
 }
+
 
 //longest acoustic song based on Acousticness Value > 40 sorted by popularity
 function long_acoustic()
