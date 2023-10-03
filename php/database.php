@@ -276,15 +276,12 @@ function long_acoustic($db)
 function club($db)
 {
 
-    $clubQuery = 
-    $clubQuery = 
-    "SELECT songs.title, artists.artist_name
+    $clubQuery = "SELECT songs.title, artists.artist_name, ((songs.danceability * 1.6) + (songs.energy * 1.4)) AS suit
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     WHERE songs.danceability > 80 
-      AND ((songs.danceability * 1.6) + (songs.energy * 1.4)) > 80
     GROUP BY songs.title
-    ORDER BY songs.duration DESC
+    ORDER BY suit DESC
     LIMIT 10";
 
     $clubResult = $db->query($clubQuery);

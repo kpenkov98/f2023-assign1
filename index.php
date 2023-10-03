@@ -45,6 +45,9 @@ include 'php/htmlhead.php';
         <?php long_acoustic($db); ?>
         </table>
         <li>At The Club</li>
+        <table>
+        <?php club($db); ?>
+        </table>
         <li>Running Songs</li>
         <li>Studying Songs</li>
     </section>
