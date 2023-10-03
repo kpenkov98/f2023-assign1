@@ -212,7 +212,7 @@ function most_pop_songs($db)
     foreach($top_song as $song_name) {
         echo "<tr>";
         echo "<td>";
-        echo $song_name['title']; 
+        echo $song_name['title'] . " by " . $song_name['artist_name'];
         echo "</td>";
         echo "</tr>";
     }
@@ -245,14 +245,60 @@ function one_hit_wonders($db)
 }
 
 
-//longest acoustic song based on Acousticness Value > 40 sorted by popularity
-function long_acoustic()
+//longest acoustic song based on Acousticness Value > 40 sorted by duration
+function long_acoustic($db)
 {
+
+    $acousticQuery = 
+    "SELECT songs.title, artists.artist_name
+    FROM songs
+    INNER JOIN artists ON songs.artist_id = artists.artist_id
+    WHERE songs.acousticness > 40
+    GROUP BY songs.title
+    ORDER BY songs.duration DESC
+    LIMIT 10";
+
+    $acousticResult = $db->query($acousticQuery);
+
+    $acoustic = $acousticResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($acoustic as $song_name) {
+        echo "<tr>";
+        echo "<td>";
+        echo $song_name['title'] . " by " . $song_name['artist_name'];
+        echo "</td>";
+        echo "</tr>";
+    }
+
 }
 
 //club songs with danceability of >80 (danceability * 1.6 + energy * 1.4, sorted by desc)
-function club()
+function club($db)
 {
+
+    $clubQuery = 
+    $clubQuery = 
+    "SELECT songs.title, artists.artist_name
+    FROM songs
+    INNER JOIN artists ON songs.artist_id = artists.artist_id
+    WHERE songs.danceability > 80 
+      AND ((songs.danceability * 1.6) + (songs.energy * 1.4)) > 80
+    GROUP BY songs.title
+    ORDER BY songs.duration DESC
+    LIMIT 10";
+
+    $clubResult = $db->query($clubQuery);
+
+    $club = $clubResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($club as $song_name) {
+        echo "<tr>";
+        echo "<td>";
+        echo $song_name['title'] . " by " . $song_name['artist_name'];
+        echo "</td>";
+        echo "</tr>";
+    }
+
 }
 
 //songs to run to (bpm 120-125) (energy * 1.3 + valence * 1.6 sorted by desc)

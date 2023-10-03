@@ -41,6 +41,9 @@ include 'php/htmlhead.php';
         <?php one_hit_wonders($db); ?>
         </table>
         <li>Longest Acoustic Songs</li>
+        <table>
+        <?php long_acoustic($db); ?>
+        </table>
         <li>At The Club</li>
         <li>Running Songs</li>
         <li>Studying Songs</li>
