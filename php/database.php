@@ -199,7 +199,7 @@ function top_artists($db)
 function most_pop_songs($db)
 {
     $topsongQuery = 
-    "SELECT songs.title, artists.artist_name
+    "SELECT songs.title, artists.artist_name, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     ORDER BY songs.popularity DESC
@@ -211,9 +211,7 @@ function most_pop_songs($db)
 
     foreach($top_song as $song_name) {
         echo "<tr>";
-        echo "<td>";
-        echo $song_name['title'] . " by " . $song_name['artist_name'];
-        echo "</td>";
+        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
 }
@@ -223,7 +221,7 @@ function most_pop_songs($db)
 function one_hit_wonders($db)
 {
     $onehitQuery = 
-    "SELECT songs.title, artists.artist_name
+    "SELECT songs.title, artists.artist_name, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     GROUP BY artists.artist_id
@@ -237,9 +235,7 @@ function one_hit_wonders($db)
 
     foreach($onehit as $song_name) {
         echo "<tr>";
-        echo "<td>";
-        echo $song_name['title'] . " by " . $song_name['artist_name'];
-        echo "</td>";
+        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
 }
@@ -250,7 +246,7 @@ function long_acoustic($db)
 {
 
     $acousticQuery = 
-    "SELECT songs.title, artists.artist_name
+    "SELECT songs.title, artists.artist_name, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     WHERE songs.acousticness > 40
@@ -264,9 +260,7 @@ function long_acoustic($db)
 
     foreach($acoustic as $song_name) {
         echo "<tr>";
-        echo "<td>";
-        echo $song_name['title'] . " by " . $song_name['artist_name'];
-        echo "</td>";
+        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
 
@@ -276,7 +270,7 @@ function long_acoustic($db)
 function club($db)
 {
 
-    $clubQuery = "SELECT songs.title, artists.artist_name, ((songs.danceability * 1.6) + (songs.energy * 1.4)) AS suit
+    $clubQuery = "SELECT songs.title, artists.artist_name, ((songs.danceability * 1.6) + (songs.energy * 1.4)) AS suit, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     WHERE songs.danceability > 80 
@@ -290,22 +284,56 @@ function club($db)
 
     foreach($club as $song_name) {
         echo "<tr>";
-        echo "<td>";
-        echo $song_name['title'] . " by " . $song_name['artist_name'];
-        echo "</td>";
+        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
 
 }
 
 //songs to run to (bpm 120-125) (energy * 1.3 + valence * 1.6 sorted by desc)
-function running_song()
+function running_song($db)
 {
+    $runningQuery = "SELECT songs.title, artists.artist_name, ((songs.energy * 1.3) + (songs.valence * 1.6)) AS suit, songs.song_id
+    FROM songs
+    INNER JOIN artists ON songs.artist_id = artists.artist_id
+    WHERE songs.bpm BETWEEN 120 AND 125 
+    GROUP BY songs.title
+    ORDER BY suit DESC
+    LIMIT 10";
+
+    $runningResult = $db->query($runningQuery);
+
+    $running = $runningResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($running as $song_name) {
+        echo "<tr>";
+        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
+        echo "</tr>";
+    }
+
 }
 
 //studying (bmp 100-115 AND speechiness 1-20) (acousticness * 0.8 + speechiness 100 + valence 100, sorted by desc)
-function studying_song()
+function studying_song($db)
 {
+    $studyingQuery = "SELECT songs.title, artists.artist_name, ((songs.acousticness * 0.3) + (100 - songs.speechiness) + (100 - songs.valence)) AS suit, songs.song_id
+    FROM songs
+    INNER JOIN artists ON songs.artist_id = artists.artist_id
+    WHERE songs.bpm BETWEEN 100 AND 115 AND songs.speechiness BETWEEN 1 AND 20 
+    GROUP BY songs.title
+    ORDER BY suit DESC
+    LIMIT 10";
+
+    $studyingResult = $db->query($studyingQuery);
+
+    $studying = $studyingResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($studying as $song_name) {
+        echo "<tr>";
+        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
+        echo "</tr>";
+    }
+
 }
 
 $pdo = null;
