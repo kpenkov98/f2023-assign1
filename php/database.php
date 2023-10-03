@@ -146,19 +146,78 @@ function add_to_favorites()
 }
 
 //top genres based on song amount 
-function top_genres()
+function top_genres($db)
 {
+    $genreQuery = 
+    "SELECT genres.genre_name, COUNT(songs.song_id) as song_count
+    FROM genres
+    INNER JOIN songs ON genres.genre_id = songs.genre_id
+    GROUP BY genres.genre_name
+    ORDER BY song_count DESC
+    LIMIT 10";
+
+    $genreResult = $db->query($genreQuery);
+
+    $top_genre = $genreResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($top_genre as $genre_name) {
+        echo "<tr>";
+        echo "<td>";
+        echo $genre_name['genre_name']; 
+        echo "</td>";
+        echo "</tr>";
+    }
+
 }
 
 //top artists based on song amount
-function top_artists()
+function top_artists($db)
 {
+    $artistQuery = 
+    "SELECT artists.artist_name, COUNT(songs.song_id) as song_count
+    FROM artists
+    INNER JOIN songs ON artists.artist_id = songs.artist_id
+    GROUP BY artists.artist_name
+    ORDER BY song_count DESC
+    LIMIT 10";
+
+    $artistResult = $db->query($artistQuery);
+
+    $top_artist = $artistResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($top_artist as $artist_name) {
+        echo "<tr>";
+        echo "<td>";
+        echo $artist_name['artist_name']; 
+        echo "</td>";
+        echo "</tr>";
+    }
+
 }
 
 //top song based on popularity
-function most_pop_song()
+function most_pop_songs($db)
 {
+    $topsongQuery = 
+    "SELECT songs.title, artists.artist_name
+    FROM songs
+    INNER JOIN artists ON songs.artist_id = artists.artist_id
+    ORDER BY songs.popularity DESC
+    LIMIT 10";
+
+    $topsongResult = $db->query($topsongQuery);
+
+    $top_song = $topsongResult->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($top_song as $song_name) {
+        echo "<tr>";
+        echo "<td>";
+        echo $song_name['title']; 
+        echo "</td>";
+        echo "</tr>";
+    }
 }
+
 
 //artists with one song sorted by popularity
 function one_hit_wonders()

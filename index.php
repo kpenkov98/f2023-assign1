@@ -25,10 +25,19 @@ include 'php/htmlhead.php';
     <section>
         <h2>Song Information</h2>
         <li>Top Genres</li>
+        <table>
+        <?php top_genres($db); ?>
+        </table>
         <li>Top Artists</li>
-        <li>Most Popular Song</li>
-        <li>One-Hit Wonder</li>
-        <li>Longest Acoustic Song</li>
+        <table>
+        <?php top_artists($db); ?>
+        </table>
+        <li>Most Popular Songs</li>
+        <table>
+        <?php most_pop_songs($db); ?>
+        </table>
+        <li>One-Hit Wonders</li>
+        <li>Longest Acoustic Songs</li>
         <li>At The Club</li>
         <li>Running Songs</li>
         <li>Studying Songs</li>
