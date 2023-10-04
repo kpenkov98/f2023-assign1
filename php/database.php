@@ -369,3 +369,4 @@ function studying_song($db)
 }
 
 $pdo = null;
+?>

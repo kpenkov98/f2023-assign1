@@ -18,3 +18,4 @@ function htmlhead() {
     // webpage icon
     echo '<link rel="icon" type="image/png" href="images/favicon.png">';
 }
+?>
