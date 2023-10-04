@@ -67,7 +67,7 @@ include 'php/htmlhead.php';
 
         $searchDB = $searchResult->fetchAll(PDO::FETCH_ASSOC);
 
-        echo "<table align='center' border='1' cellpadding='3' cellspacing='0'>";
+        echo "<table align='center'>";
         echo "<tr>";
         echo "<td>";
         echo "<h5 align='center'>Title</h5>";
@@ -81,16 +81,24 @@ include 'php/htmlhead.php';
         echo "<td>";
         echo "<h5 align='center'>Genre Name</h5>";
         echo "</td>";
+        echo "<td>";
+        echo "<h5 align='center'>Add To Favourites</h5>";
+        echo "</td>";
         echo "</tr>";
-
+        echo "<form method='POST' action='favourite.php'>";
         foreach ($searchDB as $music) {
           echo "<tr>";
           echo "<td><a href='song.php?song_id={$music['song_id']}' class='button-primary'>{$music['title']}</a></td>";
           echo "<td>{$music['artist_name']}</td>";
           echo "<td>{$music['year']}</td>";
           echo "<td>{$music['genre_name']}</td>";
+          echo "<td><input type='checkbox' name='favourite_songs[]' value='{$music['song_id']}'></td>";
           echo "</tr>";
         }
+        echo "<tr>";
+        echo "<td align='center'><input type='submit' value='Add Selected to Favorites'></td>";
+        echo "</tr>";
+        echo "</form>";
         echo "</table>";
       } else { // if there is no matching rows do following
         echo "<h5 align ='center'>No Results</h5>";
@@ -110,7 +118,11 @@ include 'php/htmlhead.php';
       echo "<td>";
       echo "<h5 align='center'>Popularity</h5>";
       echo "</td>";
+      echo "<td>";
+      echo "<h5 align='center'>Add To Favourites</h5>";
+      echo "</td>";
       echo "</tr>";
+      echo "<form method='POST' action='favourite.php'>";
 
       foreach ($musicTable as $music) {
         echo "<tr>";
@@ -118,9 +130,14 @@ include 'php/htmlhead.php';
         echo "<td>  {$music['artist_name']} </td>";
         echo "<td> {$music['year']}</td>";
         echo "<td> {$music['popularity']}</td>";
+        echo "<td><input type='checkbox' name='favourite_songs[]' value='{$music['song_id']}'></td>";
         echo "</button>";
         echo  "</tr>";
       }
+      echo "<tr>";
+      echo "<td align='center'><input type='submit' value='Add Selected to Favorites'></td>";
+      echo "</tr>";
+      echo "</form>";
       echo "</table>";
     }
 

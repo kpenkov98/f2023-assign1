@@ -7,18 +7,28 @@ include 'php/navigation.php';
 include 'php/htmlhead.php';
 ?>
 <html lang="en">
+
 <head>
-<?php htmlhead(); ?>
+    <?php htmlhead(); ?>
 </head>
+
 <body>
-<header>
-    <?php music_header(); 
-    navigation();
-     ?>
-</header>
+    <header>
+        <?php music_header();
+        navigation();
+        ?>
+    </header>
+
+    <body>
+        <?php
+        add_to_favorites($db);
+
+        ?>
+    </body>
     <footer>
-    <?php footer(); ?>
+        <?php footer(); ?>
     </footer>
 
 </body>
+
 </html>

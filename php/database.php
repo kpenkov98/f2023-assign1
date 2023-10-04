@@ -93,17 +93,12 @@ function search_song($db)
     echo "<option value=''>Select a genre</option>";
     foreach ($genreOption as $genre_id => $genre_name) {
         if (isset($genre_name) && $genre_name == $genre_id) {
-            echo " selected";   
+            echo " selected";
         }
         echo "<option>$genre_name</option>";
     }
     echo "<input type='submit' value='Search'/>";
     echo "</form>";
-}
-
-//show all songs in the database
-function navigation_link()
-{
 }
 
 //view single song by clicking a link
@@ -141,15 +136,58 @@ function single_song($db)
 
 
 //add button to add a song to favorites, includes remove from favorites and remove all
-function add_to_favorites()
+function add_to_favorites($db)
 {
+
+    if (isset($_POST['song_id'])) {
+        $song_id_array = $_POST['song_id'];
+
+        if (!is_array($song_id_array)) {
+
+            $song_id_array = [$song_id_array];
+        }
+
+        $favourite_songs = [];
+
+        $songQuery =
+            "SELECT songs.song_id, songs.title, artists.artist_name
+        FROM songs
+        INNER JOIN artists ON songs.artist_id = artists.artist_id
+        WHERE songs.song_id = :song_id";
+
+        foreach ($song_id_array as $song_id) {
+            $songResult = $db->query($songQuery);
+
+            $favSong = $songResult->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($favSong) {
+                $favourite_songs = $favSong;
+            }
+        }
+
+        if (!empty($favourite_songs)) {
+            foreach ($favourite_songs as $songData) {
+                echo "Song Title: " . $songData['title'];
+                echo " Artist Name: " . $songData['artist_name'];
+                echo "<br>";
+            }
+        } else {
+            echo "No songs selected";
+        }
+    }
 }
+
+
+
+
+
+
 
 //top genres based on song amount 
 function top_genres($db)
 {
-    $genreQuery = 
-    "SELECT genres.genre_name, COUNT(songs.song_id) as song_count
+    $genreQuery =
+        "SELECT genres.genre_name, COUNT(songs.song_id) as song_count
     FROM genres
     INNER JOIN songs ON genres.genre_id = songs.genre_id
     GROUP BY genres.genre_name
@@ -160,21 +198,20 @@ function top_genres($db)
 
     $top_genre = $genreResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($top_genre as $genre_name) {
+    foreach ($top_genre as $genre_name) {
         echo "<tr>";
         echo "<td>";
-        echo $genre_name['genre_name']; 
+        echo $genre_name['genre_name'];
         echo "</td>";
         echo "</tr>";
     }
-
 }
 
 //top artists based on song amount
 function top_artists($db)
 {
-    $artistQuery = 
-    "SELECT artists.artist_name, COUNT(songs.song_id) as song_count
+    $artistQuery =
+        "SELECT artists.artist_name, COUNT(songs.song_id) as song_count
     FROM artists
     INNER JOIN songs ON artists.artist_id = songs.artist_id
     GROUP BY artists.artist_name
@@ -185,21 +222,20 @@ function top_artists($db)
 
     $top_artist = $artistResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($top_artist as $artist_name) {
+    foreach ($top_artist as $artist_name) {
         echo "<tr>";
         echo "<td>";
-        echo $artist_name['artist_name']; 
+        echo $artist_name['artist_name'];
         echo "</td>";
         echo "</tr>";
     }
-
 }
 
 //top song based on popularity
 function most_pop_songs($db)
 {
-    $topsongQuery = 
-    "SELECT songs.title, artists.artist_name, songs.song_id
+    $topsongQuery =
+        "SELECT songs.title, artists.artist_name, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     ORDER BY songs.popularity DESC
@@ -209,7 +245,7 @@ function most_pop_songs($db)
 
     $top_song = $topsongResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($top_song as $song_name) {
+    foreach ($top_song as $song_name) {
         echo "<tr>";
         echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
@@ -220,8 +256,8 @@ function most_pop_songs($db)
 //artists with one song sorted by popularity
 function one_hit_wonders($db)
 {
-    $onehitQuery = 
-    "SELECT songs.title, artists.artist_name, songs.song_id
+    $onehitQuery =
+        "SELECT songs.title, artists.artist_name, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     GROUP BY artists.artist_id
@@ -233,7 +269,7 @@ function one_hit_wonders($db)
 
     $onehit = $onehitResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($onehit as $song_name) {
+    foreach ($onehit as $song_name) {
         echo "<tr>";
         echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
@@ -245,8 +281,8 @@ function one_hit_wonders($db)
 function long_acoustic($db)
 {
 
-    $acousticQuery = 
-    "SELECT songs.title, artists.artist_name, songs.song_id
+    $acousticQuery =
+        "SELECT songs.title, artists.artist_name, songs.song_id
     FROM songs
     INNER JOIN artists ON songs.artist_id = artists.artist_id
     WHERE songs.acousticness > 40
@@ -258,12 +294,11 @@ function long_acoustic($db)
 
     $acoustic = $acousticResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($acoustic as $song_name) {
+    foreach ($acoustic as $song_name) {
         echo "<tr>";
         echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
-
 }
 
 //club songs with danceability of >80 (danceability * 1.6 + energy * 1.4, sorted by desc)
@@ -282,12 +317,11 @@ function club($db)
 
     $club = $clubResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($club as $song_name) {
+    foreach ($club as $song_name) {
         echo "<tr>";
         echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
-
 }
 
 //songs to run to (bpm 120-125) (energy * 1.3 + valence * 1.6 sorted by desc)
@@ -305,12 +339,11 @@ function running_song($db)
 
     $running = $runningResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($running as $song_name) {
+    foreach ($running as $song_name) {
         echo "<tr>";
         echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
-
 }
 
 //studying (bmp 100-115 AND speechiness 1-20) (acousticness * 0.8 + speechiness 100 + valence 100, sorted by desc)
@@ -328,13 +361,11 @@ function studying_song($db)
 
     $studying = $studyingResult->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($studying as $song_name) {
+    foreach ($studying as $song_name) {
         echo "<tr>";
         echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
         echo "</tr>";
     }
-
 }
 
 $pdo = null;
-?>
