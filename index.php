@@ -11,17 +11,17 @@ include 'php/htmlhead.php';
 <html lang="en">
 
 <head>
-    <?php htmlhead(); ?>
-</head>
+    <?php htmlhead() ?>
 </head>
 
 <body>
-    <div class='container'>
+    <div class="container">
         <header>
             <?php music_header(); ?>
         </header>
-        <div class='navbar-spacer'></div>
-        <?php navigation(); ?>
+        <nav>
+        <?php navigation() ?>
+        </nav>
         <div class="container">
             <h2>Home Page</h2>
             <h3>Kirill Penkov COMP3512 <a href="https://github.com/kpenkov98/f2023-assign1.git" target="_blank">Github</a></h3>

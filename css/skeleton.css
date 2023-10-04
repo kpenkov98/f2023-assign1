@@ -380,7 +380,38 @@ hr {
   border-top: 1px solid #E1E1E1; }
 
 
-/* Clearing
+/* Style the navigation bar */
+.navbar {
+  background-color: #333; /* Background color of the navbar */
+  overflow: hidden; /* Ensures the navbar's content doesn't overflow */
+}
+
+/* Style the list (ul) inside the navbar */
+.navbar-list {
+  list-style-type: none; /* Remove default list bullets */
+  margin: 0;
+  padding: 0;
+  display: flex; /* Make the list items display horizontally */
+}
+
+/* Style the individual list items (li) */
+.navbar-item {
+  margin-right: 20px; /* Add some spacing between items */
+}
+
+/* Style the links (a) within the list items */
+.navbar-link {
+  text-decoration: none; /* Remove underlines from links */
+  color: white; /* Text color of the links */
+  font-weight: bold; /* Make the text bold */
+}
+
+/* Change link color on hover */
+.navbar-link:hover {
+  color: #ff9900; /* Change the text color on hover */
+}
+
+  /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 /* Self Clearing Goodness */

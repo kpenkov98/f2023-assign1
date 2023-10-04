@@ -10,6 +10,6 @@ function navigation() {
             echo "<li class='navbar-item'><a class='navbar-link' href='about.php'>About Us(Me)</a></li>";
         echo "</ul>";
     echo "</div>";
-    echo "</nav";
+    echo "</nav>";
 }
 ?>
