@@ -21,9 +21,7 @@ include 'php/htmlhead.php';
 
     <body>
         <?php
-        add_to_favorites($db);
-
-        ?>
+        add_to_favorites($db); ?>
     </body>
     <footer>
         <?php footer(); ?>

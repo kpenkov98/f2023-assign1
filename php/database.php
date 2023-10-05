@@ -198,13 +198,17 @@ function top_genres($db)
 
     $top_genre = $genreResult->fetchAll(PDO::FETCH_ASSOC);
 
+    
+    
     foreach ($top_genre as $genre_name) {
-        echo "<tr>";
-        echo "<td>";
+        
+        echo "<li>";
         echo $genre_name['genre_name'];
-        echo "</td>";
-        echo "</tr>";
+        echo "</li>";
+        
     }
+    
+    
 }
 
 //top artists based on song amount
@@ -223,11 +227,11 @@ function top_artists($db)
     $top_artist = $artistResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($top_artist as $artist_name) {
-        echo "<tr>";
-        echo "<td>";
+        
+        echo "<li>";
         echo $artist_name['artist_name'];
-        echo "</td>";
-        echo "</tr>";
+        echo "</li>";
+        
     }
 }
 
@@ -246,9 +250,9 @@ function most_pop_songs($db)
     $top_song = $topsongResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($top_song as $song_name) {
-        echo "<tr>";
-        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
-        echo "</tr>";
+           
+        echo "<li><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></li>";
+
     }
 }
 
@@ -270,9 +274,8 @@ function one_hit_wonders($db)
     $onehit = $onehitResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($onehit as $song_name) {
-        echo "<tr>";
-        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
-        echo "</tr>";
+
+        echo "<li><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></li>";
     }
 }
 
@@ -295,9 +298,8 @@ function long_acoustic($db)
     $acoustic = $acousticResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($acoustic as $song_name) {
-        echo "<tr>";
-        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
-        echo "</tr>";
+
+        echo "<li><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></li>";
     }
 }
 
@@ -318,9 +320,9 @@ function club($db)
     $club = $clubResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($club as $song_name) {
-        echo "<tr>";
-        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
-        echo "</tr>";
+
+        echo "<li><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></li>";
+
     }
 }
 
@@ -340,9 +342,9 @@ function running_song($db)
     $running = $runningResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($running as $song_name) {
-        echo "<tr>";
-        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
-        echo "</tr>";
+
+        echo "<li><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></li>";
+
     }
 }
 
@@ -362,9 +364,9 @@ function studying_song($db)
     $studying = $studyingResult->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($studying as $song_name) {
-        echo "<tr>";
-        echo "<td><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></td>";
-        echo "</tr>";
+
+        echo "<li><a href='song.php?song_id={$song_name['song_id']}' class='button-primary'>{$song_name['title']} by {$song_name['artist_name']}</a></li>";
+
     }
 }
 
