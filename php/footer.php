@@ -1,7 +1,6 @@
 <?php 
 function footer() {
-echo "<h6>COMP3512 Assignment 1 </h6>";
-echo "<h6>&copy Kirill Penkov</h6>";
-echo "<a href='https://github.com/kpenkov98/f2023-assign1.git' target='_blank'><h6>Github Repo</h6></a>";
+echo "<h5>COMP3512 Assignment 1 </h5>";
+echo "<h5>&copy Kirill Penkov</h5>";
+echo "<a class='button button-primary' href='https://github.com/kpenkov98/f2023-assign1.git' type='button' target='_blank'><h5>Github Repo</h5></a>";
 }
-?>

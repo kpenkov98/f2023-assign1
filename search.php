@@ -12,23 +12,25 @@ include 'php/htmlhead.php';
 
   <head>
     <?php htmlhead(); ?>
-
   </head>
 
 <body>
-  <header>
-    <?php music_header();
-    navigation();  ?>
-  </header>
-
-  <!--source for search info https://owlcation.com/stem/Simple-search-PHP-MySQL-->
-  <?php
-  search_song($db);
-  ?>
-  <footer>
-    <?php footer(); ?>
-  </footer>
-
+  <div class="container">
+    <header>
+      <?php music_header();
+      navigation();  ?>
+    </header>
+    <div class="row">
+      <br>
+      <!--source for search info https://owlcation.com/stem/Simple-search-PHP-MySQL-->
+      <?php
+      search_song($db);
+      ?>
+    </div>
+    <footer>
+      <?php footer(); ?>
+    </footer>
+  </div>
 </body>
 
 </html>

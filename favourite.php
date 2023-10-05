@@ -13,20 +13,20 @@ include 'php/htmlhead.php';
 </head>
 
 <body>
-    <header>
-        <?php music_header();
-        navigation();
-        ?>
-    </header>
-
-    <body>
-        <?php
-        add_to_favorites($db); ?>
-    </body>
-    <footer>
-        <?php footer(); ?>
-    </footer>
-
+    <div class="container">
+        <header>
+            <?php music_header();
+            navigation();
+            ?>
+        </header>
+        <div class="row">
+            <?php
+            add_to_favorites($db); ?>
+        </div>
+        <footer>
+            <?php footer(); ?>
+        </footer>
+    </div>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php
 function navigation() {
-    echo "<nav align='center' class='navbar'>";
+    echo "<nav class='navbar'>";
         echo "<ul class='navbar-list'>";
             echo "<li class='navbar-item'><a class='navbar-link' href='index.php'>Home</a></li>";
             echo "<li class='navbar-item'><a class='navbar-link' href='search.php'>Search</a></li>";
@@ -10,4 +10,3 @@ function navigation() {
         echo "</ul>";
     echo "</nav>";
 }
-?>

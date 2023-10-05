@@ -18,6 +18,7 @@ html {
 
 body {
   margin: 0;
+  background-color: whitesmoke;
 }
 
 /* HTML5 display definitions
@@ -43,9 +44,14 @@ menu,
 nav,
 section,
 summary {
-  display: inline-block !important;
+  display: inline-block;
 }
 
+header,
+footer {
+  background-color: #ebebeb;
+  width: 100%;
+}
 /**
  * 1. Correct `inline-block` display not defined in IE 8/9.
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
