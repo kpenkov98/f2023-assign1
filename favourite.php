@@ -5,6 +5,7 @@ include 'php/config.php';
 include 'php/database.php';
 include 'php/navigation.php';
 include 'php/htmlhead.php';
+session_start();
 ?>
 <html lang="en">
 
@@ -21,7 +22,9 @@ include 'php/htmlhead.php';
         </header>
         <div class="row">
             <?php
-            add_to_favorites($db); ?>
+            add_to_favourites($db);
+            display_favourites($db);
+            ?>
         </div>
         <footer>
             <?php footer(); ?>

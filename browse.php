@@ -37,7 +37,7 @@ include 'php/htmlhead.php';
         $min_length = 1;
         //minimum length of the query
 
-        if (strlen($title) >= $min_length || strlen($year) >= $min_length) { // if query length is more or equal minimum length then
+        if (strlen($title) >= $min_length || strlen($artist) >= $min_length || strlen($genre) >= $min_length || strlen($year) >= $min_length) {
 
           $title = strtolower(htmlspecialchars($title));
           $artist = strtolower(htmlspecialchars($artist));
@@ -46,19 +46,17 @@ include 'php/htmlhead.php';
 
           //changes characters used in html to their equivalents, for example: < to &gt;
 
-          echo $year;
-
           $searchQuery =
             "SELECT songs.song_id, songs.title, artists.artist_name, songs.year, genres.genre_name  
         FROM songs 
         INNER JOIN artists ON songs.artist_id = artists.artist_id
         INNER JOIN genres ON songs.genre_id = genres.genre_id
         WHERE 
-        LOWER(songs.title) LIKE '%$title%' 
+        songs.title LIKE '%$title%' 
         OR 
-        LOWER(artists.artist_name) = '$artist' 
+        artists.artist_name LIKE '$artist' 
         OR 
-        LOWER(genres.genre_name) = '$genre' 
+        genres.genre_name LIKE '$genre' 
         OR 
         songs.year = '$year' 
         ORDER BY songs.popularity DESC";
@@ -67,7 +65,7 @@ include 'php/htmlhead.php';
           $searchResult->execute();
 
           $searchDB = $searchResult->fetchAll(PDO::FETCH_ASSOC);
-
+          echo "<form method='POST' action='favourite.php'>";
           echo "<table align='center'>";
           echo "<tr>";
           echo "<td>";
@@ -86,7 +84,7 @@ include 'php/htmlhead.php';
           echo "<h5 align='center'>Add To Favourites</h5>";
           echo "</td>";
           echo "</tr>";
-          echo "<form method='POST' action='favourite.php'>";
+
           foreach ($searchDB as $music) {
             echo "<tr>";
             echo "<td><a href='song.php?song_id={$music['song_id']}' class='button-primary'>{$music['title']}</a></td>";
@@ -99,13 +97,14 @@ include 'php/htmlhead.php';
           echo "<tr>";
           echo "<td align='center'><input type='submit' value='Add Selected to Favorites'></td>";
           echo "</tr>";
-          echo "</form>";
           echo "</table>";
-        } else { // if there is no matching rows do following
+          echo "</form>";
+        } else {
           echo "<h5 align ='center'>No Results</h5>";
         }
       } else {
-        echo "<table align='center' border='1' cellpadding='3' cellspacing='0'>";
+        echo "<form method='POST' action='favourite.php'>";
+        echo "<table>";
         echo "<tr>";
         echo "<td>";
         echo "<h5 align='center'>Title</h5>";
@@ -123,12 +122,11 @@ include 'php/htmlhead.php';
         echo "<h5 align='center'>Add To Favourites</h5>";
         echo "</td>";
         echo "</tr>";
-        echo "<form method='POST' action='favourite.php'>";
 
         foreach ($musicTable as $music) {
           echo "<tr>";
           echo "<td><a href='song.php?song_id={$music['song_id']}' class='button-primary'>{$music['title']}</a></td>";
-          echo "<td>  {$music['artist_name']} </td>";
+          echo "<td> {$music['artist_name']} </td>";
           echo "<td> {$music['year']}</td>";
           echo "<td> {$music['popularity']}</td>";
           echo "<td><input type='checkbox' name='favourite_songs[]' value='{$music['song_id']}'></td>";
@@ -138,8 +136,8 @@ include 'php/htmlhead.php';
         echo "<tr>";
         echo "<td align='center'><input type='submit' value='Add Selected to Favorites'></td>";
         echo "</tr>";
-        echo "</form>";
         echo "</table>";
+        echo "</form>";
       }
 
       ?>

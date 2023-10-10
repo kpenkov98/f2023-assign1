@@ -134,54 +134,76 @@ function single_song($db)
 }
 
 
-//add button to add a song to favorites, includes remove from favorites and remove all
-function add_to_favorites($db)
+//add songs to favourites
+function add_to_favourites($db)
 {
+    if (isset($_POST['favourite_songs'])) {
+        $song_id_array = $_POST['favourite_songs'];
 
-    if (isset($_POST['song_id'])) {
-        $song_id_array = $_POST['song_id'];
-
+        //check $song_id_array is an array
         if (!is_array($song_id_array)) {
-
             $song_id_array = [$song_id_array];
         }
 
-        $favourite_songs = [];
-
-        $songQuery =
-            "SELECT songs.song_id, songs.title, artists.artist_name
-        FROM songs
-        INNER JOIN artists ON songs.artist_id = artists.artist_id
-        WHERE songs.song_id = :song_id";
+        //check if any favourites in the list
+        $favourite_songs = $_SESSION['favourite_songs'] ?? [];
 
         foreach ($song_id_array as $song_id) {
-            $songResult = $db->query($songQuery);
-
-            $favSong = $songResult->fetchAll(PDO::FETCH_ASSOC);
-
-            if ($favSong) {
-                $favourite_songs = $favSong;
+            //add songs to the list
+            if (!in_array($song_id, $favourite_songs)) {
+                $favourite_songs[] = $song_id;
             }
         }
 
-        if (!empty($favourite_songs)) {
-            foreach ($favourite_songs as $songData) {
-                echo "Song Title: " . $songData['title'];
-                echo " Artist Name: " . $songData['artist_name'];
-                echo "<br>";
-            }
-        } else {
-            echo "No Songs Selected";
-        }
+        //store favourites in the session
+        $_SESSION['favourite_songs'] = $favourite_songs;
     }
 }
 
+//display favourite songs
+function display_favourites($db)
+{
+    if (!empty($_SESSION['favourite_songs'])) {
+        $song_ids = $_SESSION['favourite_songs'];
+        $song_ids = implode(',', $_SESSION['favourite_songs']);
+        $favourite_query = "SELECT songs.song_id, songs.title, artists.artist_name
+                  FROM songs
+                  INNER JOIN artists ON songs.artist_id = artists.artist_id
+                  WHERE songs.song_id IN ($song_ids)";
 
+        $favourite_result = $db->prepare($favourite_query);
+        $favourite_result->execute();
 
+        $favourite_songs = $favourite_result->fetchAll(PDO::FETCH_ASSOC);
 
+        if (!empty($favourite_songs)) {
+            foreach ($favourite_songs as $songData) {
+                echo "<bold>Song Title:</bold> " . $songData['title'];
+                echo " <bold>Artist Name:</bold> " . $songData['artist_name'];
+                echo "<br>";
+                echo "<form method='post' action=''>";
+                echo "<input type='hidden' name='remove_song_id' value='" . $songData['song_id'] . "'>";
+                echo "<input type='submit' name='remove_from_favourites' value='Remove from Favourites'>";
+                echo "</form>";
+                echo "<br>";
+            }
+        }
 
-
-
+        //remove song
+        if (isset($_POST['remove_song_id'])) {
+            $song_id_to_remove = $_POST['remove_song_id'];
+            //search array and remove the song from the list
+            if (($key = array_search($song_id_to_remove, $_SESSION['favourite_songs'])) !== false) {
+                unset($_SESSION['favourite_songs'][$key]);
+            }
+            //reload page on button press
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+            exit;
+        }
+    } else {
+        echo "No Songs Selected";
+    }
+}
 //top genres based on song amount 
 function top_genres($db)
 {
