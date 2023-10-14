@@ -46,20 +46,29 @@ include 'php/htmlhead.php';
 
           //changes characters used in html to their equivalents, for example: < to &gt;
 
-          $searchQuery =
-            "SELECT songs.song_id, songs.title, artists.artist_name, songs.year, genres.genre_name  
-        FROM songs 
-        INNER JOIN artists ON songs.artist_id = artists.artist_id
-        INNER JOIN genres ON songs.genre_id = genres.genre_id
-        WHERE 
-        songs.title LIKE '%$title%' 
-        OR 
-        artists.artist_name LIKE '$artist' 
-        OR 
-        genres.genre_name LIKE '$genre' 
-        OR 
-        songs.year = '$year' 
-        ORDER BY songs.popularity DESC";
+          $searchQuery = "SELECT songs.song_id, songs.title, artists.artist_name, songs.year, genres.genre_name  
+          FROM songs 
+          INNER JOIN artists ON songs.artist_id = artists.artist_id
+          INNER JOIN genres ON songs.genre_id = genres.genre_id
+          WHERE 1";
+
+          if (!empty($title)) {
+            $searchQuery .= " AND songs.title LIKE '%$title%'";
+          }
+
+          if (!empty($artist)) {
+            $searchQuery .= " AND artists.artist_name LIKE '%$artist%'";
+          }
+
+          if (!empty($genre)) {
+            $searchQuery .= " AND genres.genre_name LIKE '%$genre%'";
+          }
+
+          if (!empty($year)) {
+            $searchQuery .= " AND songs.year = '$year'";
+          }
+
+          $searchQuery .= " ORDER BY songs.popularity DESC";
 
           $searchResult = $db->prepare($searchQuery);
           $searchResult->execute();
@@ -95,7 +104,7 @@ include 'php/htmlhead.php';
             echo "</tr>";
           }
           echo "<tr>";
-          echo "<td align='center'><input type='submit' value='Add Selected to Favorites'></td>";
+          echo "<td align='center'><input type='submit' class='floating-button' value='Add Selected to Favorites'></td>";
           echo "</tr>";
           echo "</table>";
           echo "</form>";
@@ -134,7 +143,7 @@ include 'php/htmlhead.php';
           echo  "</tr>";
         }
         echo "<tr>";
-        echo "<td align='center'><input type='submit' value='Add Selected to Favorites'></td>";
+        echo "<td align='center'><input type='submit' class='floating-button' value='Add Selected to Favorites'></td>";
         echo "</tr>";
         echo "</table>";
         echo "</form>";
