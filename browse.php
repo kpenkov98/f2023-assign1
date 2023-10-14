@@ -57,11 +57,11 @@ include 'php/htmlhead.php';
           }
 
           if (!empty($artist)) {
-            $searchQuery .= " AND artists.artist_name LIKE '%$artist%'";
+            $searchQuery .= " AND artists.artist_name LIKE '$artist'";
           }
 
           if (!empty($genre)) {
-            $searchQuery .= " AND genres.genre_name LIKE '%$genre%'";
+            $searchQuery .= " AND genres.genre_name LIKE '$genre'";
           }
 
           if (!empty($year)) {
@@ -100,11 +100,11 @@ include 'php/htmlhead.php';
             echo "<td>{$music['artist_name']}</td>";
             echo "<td>{$music['year']}</td>";
             echo "<td>{$music['genre_name']}</td>";
-            echo "<td><input type='checkbox' name='favourite_songs[]' value='{$music['song_id']}'></td>";
+            echo "<td><input align='center' type='checkbox' name='favourite_songs[]' value='{$music['song_id']}'></td>";
             echo "</tr>";
           }
           echo "<tr>";
-          echo "<td align='center'><input type='submit' class='floating-button' value='Add Selected to Favorites'></td>";
+          echo "<td align='center'><input type='submit' class='floating-button button button-primary' value='Add Selected to Favorites'></td>";
           echo "</tr>";
           echo "</table>";
           echo "</form>";
@@ -143,7 +143,7 @@ include 'php/htmlhead.php';
           echo  "</tr>";
         }
         echo "<tr>";
-        echo "<td align='center'><input type='submit' class='floating-button' value='Add Selected to Favorites'></td>";
+        echo "<td align='center'><input type='submit' class='floating-button button button-primary' value='Add Selected to Favorites'></td>";
         echo "</tr>";
         echo "</table>";
         echo "</form>";

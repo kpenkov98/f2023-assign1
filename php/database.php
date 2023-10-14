@@ -1,20 +1,18 @@
 <?php
 require_once 'config.php';
 
-function getDB($connString, $user, $pass)
+function getDB($dataPath)
 {
-
     try {
-
-        $pdo = new PDO($connString, $user, $pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
+        $conn = new PDO('sqlite:' . $dataPath);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
     } catch (PDOException $e) {
-        die($e->getMessage());
+        die("Connection failed: " . $e->getMessage());
     }
 }
 
-$db = getDB($connString, $user, $pass);
+$db = getDB($dataPath);
 
 //joins the tables and sorts music for browsing
 function sorted_music_list($db)
@@ -111,7 +109,7 @@ function single_song($db)
         $songQuery =
             "SELECT songs.song_id, songs.title, artists.artist_name, 
             genres.genre_name, types.type_name, 
-            CONCAT(FLOOR(songs.duration/60),'m', ':', songs.duration % 60, 's') AS minutes
+            CAST(songs.duration / 60 AS INTEGER) || 'm' || ':' || ROUND(songs.duration % 60) || 's' AS minutes
         FROM songs
         INNER JOIN artists ON songs.artist_id = artists.artist_id
         INNER JOIN genres ON songs.genre_id = genres.genre_id
@@ -204,6 +202,7 @@ function display_favourites($db)
         echo "No Songs Selected";
     }
 }
+
 //top genres based on song amount 
 function top_genres($db)
 {
@@ -218,8 +217,6 @@ function top_genres($db)
     $genreResult = $db->query($genreQuery);
 
     $top_genre = $genreResult->fetchAll(PDO::FETCH_ASSOC);
-
-
 
     foreach ($top_genre as $genre_name) {
 
